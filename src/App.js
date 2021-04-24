@@ -1,22 +1,44 @@
 import React, { useState } from "react";
 import Boxes from "./Components/Boxes";
-import "./App.css";
 import ColourPicker from "./Components/ColourPicker";
+import "./App.css";
 
 const App = () => {
   const [boxes, updateBoxes] = useState([
-    { id: 1, highlight: false, colour: "yellow" },
-    { id: 2, highlight: false, colour: "yellow" },
-    { id: 3, highlight: false, colour: "yellow" },
-    { id: 4, highlight: false, colour: "yellow" },
-    { id: 5, highlight: false, colour: "yellow" },
-    { id: 6, highlight: false, colour: "yellow" },
-    { id: 7, highlight: false, colour: "yellow" },
-    { id: 8, highlight: false, colour: "yellow" },
-    { id: 9, highlight: false, colour: "yellow" },
+    { id: 1, highlight: false, colour: "yellow", numbers: [1, 3] },
+    { id: 2, highlight: false, colour: "yellow", numbers: [0, 2, 4] },
+    { id: 3, highlight: false, colour: "yellow", numbers: [1, 5] },
+    { id: 4, highlight: false, colour: "yellow", numbers: [0, 4, 6] },
+    { id: 5, highlight: false, colour: "yellow", numbers: [1, 3, 5, 7] },
+    { id: 6, highlight: false, colour: "yellow", numbers: [2, 4, 8] },
+    { id: 7, highlight: false, colour: "yellow", numbers: [3, 7] },
+    { id: 8, highlight: false, colour: "yellow", numbers: [4, 6, 8] },
+    { id: 9, highlight: false, colour: "yellow", numbers: [5, 7] },
   ]);
 
   const [selectedColour, updateSelectedColour] = useState("yellow");
+
+  const handleColourChange = (currentColour, selected) => {
+    const newColour = selected;
+    if (currentColour !== newColour) updateSelectedColour(newColour);
+  };
+
+  const changeSurrounding = (newBoxes, index, selectedColour) => {
+    newBoxes = changeGrid({
+      numbers: newBoxes[index].numbers,
+      newBoxes,
+      selectedColour,
+    });
+    return newBoxes;
+  };
+
+  const changeGrid = ({ numbers, newBoxes, selectedColour }) => {
+    numbers.forEach((number) => {
+      newBoxes[number].highlight = !newBoxes[number].highlight;
+      newBoxes[number].colour = selectedColour;
+    });
+    return newBoxes;
+  };
 
   const handleHighlight = (id, selectedColour) => {
     let newBoxes = [...boxes];
@@ -27,100 +49,9 @@ const App = () => {
     updateBoxes(newBoxes);
   };
 
-  const handleColourChange = (currentColour, selected) => {
-    let newColour = selected;
-    if (currentColour === newColour) return;
-    updateSelectedColour(newColour);
-  };
-
-  const changeSurrounding = (newBoxes, index, selectedColour) => {
-    console.log(newBoxes, index, selectedColour);
-
-    switch (index) {
-      case 0:
-        newBoxes[1].highlight = !newBoxes[1].highlight;
-        newBoxes[3].highlight = !newBoxes[3].highlight;
-        newBoxes[1].colour = selectedColour;
-        newBoxes[3].colour = selectedColour;
-        break;
-
-      case 1:
-        newBoxes[0].highlight = !newBoxes[0].highlight;
-        newBoxes[2].highlight = !newBoxes[2].highlight;
-        newBoxes[4].highlight = !newBoxes[4].highlight;
-        newBoxes[0].colour = selectedColour;
-        newBoxes[2].colour = selectedColour;
-        newBoxes[4].colour = selectedColour;
-        break;
-
-      case 2:
-        newBoxes[1].highlight = !newBoxes[1].highlight;
-        newBoxes[5].highlight = !newBoxes[5].highlight;
-        newBoxes[1].colour = selectedColour;
-        newBoxes[5].colour = selectedColour;
-        break;
-
-      case 3:
-        newBoxes[0].highlight = !newBoxes[0].highlight;
-        newBoxes[4].highlight = !newBoxes[4].highlight;
-        newBoxes[6].highlight = !newBoxes[6].highlight;
-        newBoxes[0].colour = selectedColour;
-        newBoxes[4].colour = selectedColour;
-        newBoxes[6].colour = selectedColour;
-        break;
-
-      case 4:
-        newBoxes[1].highlight = !newBoxes[1].highlight;
-        newBoxes[3].highlight = !newBoxes[3].highlight;
-        newBoxes[5].highlight = !newBoxes[5].highlight;
-        newBoxes[7].highlight = !newBoxes[7].highlight;
-        newBoxes[1].colour = selectedColour;
-        newBoxes[3].colour = selectedColour;
-        newBoxes[5].colour = selectedColour;
-        newBoxes[7].colour = selectedColour;
-        break;
-
-      case 5:
-        newBoxes[2].highlight = !newBoxes[2].highlight;
-        newBoxes[4].highlight = !newBoxes[4].highlight;
-        newBoxes[8].highlight = !newBoxes[8].highlight;
-        newBoxes[2].colour = selectedColour;
-        newBoxes[4].colour = selectedColour;
-        newBoxes[8].colour = selectedColour;
-        break;
-
-      case 6:
-        newBoxes[3].highlight = !newBoxes[3].highlight;
-        newBoxes[7].highlight = !newBoxes[7].highlight;
-        newBoxes[3].colour = selectedColour;
-        newBoxes[7].colour = selectedColour;
-        break;
-
-      case 7:
-        newBoxes[4].highlight = !newBoxes[4].highlight;
-        newBoxes[6].highlight = !newBoxes[6].highlight;
-        newBoxes[8].highlight = !newBoxes[8].highlight;
-        newBoxes[4].colour = selectedColour;
-        newBoxes[6].colour = selectedColour;
-        newBoxes[8].colour = selectedColour;
-        break;
-
-      case 8:
-        newBoxes[5].highlight = !newBoxes[5].highlight;
-        newBoxes[7].highlight = !newBoxes[7].highlight;
-        newBoxes[5].colour = selectedColour;
-        newBoxes[7].colour = selectedColour;
-        break;
-
-      default:
-        break;
-    }
-    return newBoxes;
-  };
-
   return (
     <div id="main">
-      <h1>Blue &#38; Yellow</h1>
+      <h1>Yellow &#38; Blue</h1>
       <ColourPicker
         currentColour={selectedColour}
         onColourChange={handleColourChange}
@@ -137,6 +68,7 @@ const App = () => {
 /*  TO DO
 
     ASAP:
+    Styled Components
     Randomly generate a pattern which the user has to match
     Add counter for amount of moves
     Add victory message for matching pattern
