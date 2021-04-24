@@ -1,38 +1,101 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body,
+.GameContainer,
+.GameContainer > div,
+#main,
+.selector {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+body {
+  background-color: black;
+  height: 100vh;
+  font-family: "Rubik", sans-serif;
+}
+
+#main {
+  flex-direction: column;
+}
+
+.GameContainer {
+  width: 500px;
+  height: 500px;
+  flex-wrap: wrap;
+}
+
+.GameContainer > div {
+  width: 30%;
+  height: 30%;
+  margin: 1%;
+  border-radius: 10%;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.yellow {
+  background-color: yellow;
+  border: 3px solid goldenrod;
+  box-shadow: 0 0 15px yellow, inset 0 0 15px 5px goldenrod;
+  z-index: 999;
+}
+
+.blue {
+  background-color: dodgerblue;
+  border: 3px solid royalblue;
+  box-shadow: 0 0 15px dodgerblue, inset 0 0 15px 5px darkslateblue;
+  z-index: 999;
+}
+
+.boxOff {
+  background-color: slategrey;
+  border: 3px solid black;
+}
+
+.selector {
+  justify-content: space-evenly;
+  height: 100px;
+  width: 180px;
+  margin: 20px;
+}
+
+.yellowSelect,
+.blueSelect,
+.noSelect {
+  height: 60px;
+  width: 60px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.yellowSelect {
+  background-color: yellow;
+  box-shadow: 0 0 15px yellow, inset 0 0 5px 5px goldenrod;
+}
+
+.blueSelect {
+  background-color: royalblue;
+  box-shadow: 0 0 15px dodgerblue, inset 0 0 5px 5px darkslateblue;
+}
+
+.noSelect {
+  background-color: slategrey;
+}
+
+h1 {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media screen and (max-width: 414px) {
+  .GameContainer {
+    width: 300px;
+    height: 300px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .GameContainer > div {
+    width: 30%;
+    height: 30%;
+    margin: 0.5%;
   }
 }
