@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Boxes from "./Components/Boxes";
 import ColourPicker from "./Components/ColourPicker";
 import "./App.css";
+import ResetBtn from "./Components/Reset";
+import GridSelect from "./Components/GridSelect";
 
 const App = () => {
   const [boxes, updateBoxes] = useState([
@@ -17,6 +19,8 @@ const App = () => {
   ]);
 
   const [selectedColour, updateSelectedColour] = useState("yellow");
+  const [moveCount, updateMoveCount] = useState(0);
+  const [gridSize, updateGridSize] = useState(3);
 
   const handleColourChange = (currentColour, selected) => {
     const newColour = selected;
@@ -41,6 +45,10 @@ const App = () => {
   };
 
   const handleHighlight = (id, selectedColour) => {
+    let newCount = moveCount;
+    newCount++;
+    updateMoveCount(newCount);
+
     let newBoxes = [...boxes];
     const boxIndex = id - 1;
     newBoxes[boxIndex].highlight = !newBoxes[boxIndex].highlight;
@@ -49,9 +57,25 @@ const App = () => {
     updateBoxes(newBoxes);
   };
 
+  const handleReset = () => {
+    let newBoxes = [...boxes];
+    newBoxes.forEach(box => {
+      box.highlight = false;
+      box.colour = "yellow";
+    })
+    updateBoxes(newBoxes);
+  }
+
+  const handleGridChange = () => {
+    let newGrid = gridSize;
+    newGrid++;
+    updateGridSize(newGrid);
+  }
+
   return (
     <div id="main">
       <h1>Yellow &#38; Blue</h1>
+      <p>Moves: {moveCount}</p>
       <ColourPicker
         currentColour={selectedColour}
         onColourChange={handleColourChange}
@@ -61,6 +85,8 @@ const App = () => {
         onHighlight={handleHighlight}
         selectedColour={selectedColour}
       />
+      <ResetBtn onReset={handleReset}/>
+      <GridSelect onGridChange={handleGridChange} gridSize={gridSize}/>
     </div>
   );
 };
@@ -68,6 +94,8 @@ const App = () => {
 /*  TO DO
 
     ASAP:
+    Add increment/decrement for grid button
+    Implement changeGrid method, min 3x3, max 5x5
     Styled Components
     Randomly generate a pattern which the user has to match
     Add counter for amount of moves

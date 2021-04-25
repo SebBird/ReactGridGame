@@ -10,8 +10,15 @@ body,
 
 body {
   background-color: black;
+  color: white;
   height: 100vh;
-  font-family: "Rubik", sans-serif;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+}
+
+button {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
 }
 
 #main {
@@ -42,7 +49,7 @@ body {
 
 .blue {
   background-color: dodgerblue;
-  border: 3px solid royalblue;
+  border: 3px solid darkslateblue;
   box-shadow: 0 0 15px dodgerblue, inset 0 0 15px 5px darkslateblue;
   z-index: 999;
 }
@@ -56,7 +63,7 @@ body {
   justify-content: space-evenly;
   height: 100px;
   width: 180px;
-  margin: 20px;
+  margin: 0 0 20px;
 }
 
 .yellowSelect,
@@ -71,6 +78,7 @@ body {
 
 .yellowSelect {
   background-color: yellow;
+  border: goldenrod;
   box-shadow: 0 0 15px yellow, inset 0 0 5px 5px goldenrod;
 }
 
@@ -84,7 +92,8 @@ body {
 }
 
 h1 {
-  color: white;
+  font-size: 3rem;
+  margin: 0;
 }
 
 @media screen and (max-width: 414px) {
