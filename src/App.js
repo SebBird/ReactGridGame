@@ -6,6 +6,38 @@ import ResetBtn from "./Components/Reset";
 import GridSelect from "./Components/GridSelect";
 
 const App = () => {
+  const grids = {
+    threeGrid: [
+      [1 ,3], 
+      [0, 2, 4],
+      [1, 5],
+      [0, 4, 6],
+      [1, 3, 5, 7],
+      [2, 4, 8],
+      [3, 7],
+      [4, 6, 8],
+      [5, 7],
+    ],
+    fourGrid: [
+      [1, 4],
+      [0, 2, 5],
+      [1, 3, 6],
+      [2, 7],
+      [0, 5, 8],
+      [1, 4, 6, 9],
+      [2, 5, 7, 10],
+      [3, 6, 11],
+      [4, 9, 12],
+      [5, 8, 10, 13],
+      [6, 9, 11, 14],
+      [7, 10, 15],
+      [8, 13],
+      [12, 9, 14],
+      [10, 13, 15],
+      [11, 14]
+    ]
+  }
+
   const [boxes, updateBoxes] = useState([
     { id: 1, highlight: false, colour: "yellow", numbers: [1, 3] },
     { id: 2, highlight: false, colour: "yellow", numbers: [0, 2, 4] },
@@ -66,9 +98,10 @@ const App = () => {
     updateBoxes(newBoxes);
   }
 
-  const handleGridChange = () => {
+  const handleGridChange = (operator) => {
     let newGrid = gridSize;
-    newGrid++;
+    newGrid = operator === "+" ? newGrid+1 : newGrid-1;
+    console.log(newGrid);
     updateGridSize(newGrid);
   }
 
@@ -91,11 +124,14 @@ const App = () => {
   );
 };
 
+export default App;
+
 /*  TO DO
 
     ASAP:
-    Add increment/decrement for grid button
+    Write values for 5x5 grid
     Implement changeGrid method, min 3x3, max 5x5
+    Dynamically render new grid
     Styled Components
     Randomly generate a pattern which the user has to match
     Add counter for amount of moves
@@ -107,5 +143,3 @@ const App = () => {
     Time trial setting
 
 */
-
-export default App;
