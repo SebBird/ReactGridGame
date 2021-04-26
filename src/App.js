@@ -6,9 +6,9 @@ import ResetBtn from "./Components/Reset";
 import GridSelect from "./Components/GridSelect";
 
 const App = () => {
-  const grids = {
-    threeGrid: [
-      [1 ,3], 
+  const grids = [
+    [
+      [1, 3],
       [0, 2, 4],
       [1, 5],
       [0, 4, 6],
@@ -18,7 +18,7 @@ const App = () => {
       [4, 6, 8],
       [5, 7],
     ],
-    fourGrid: [
+    [
       [1, 4],
       [0, 2, 5],
       [1, 3, 6],
@@ -34,20 +34,47 @@ const App = () => {
       [8, 13],
       [12, 9, 14],
       [10, 13, 15],
-      [11, 14]
-    ]
-  }
+      [11, 14],
+    ],
+    [
+      [1, 5],
+      [0, 2, 6],
+      [1, 3, 7],
+      [2, 4, 8],
+      [3, 9],
+      [0, 6, 10],
+      [1, 5, 7, 11],
+      [2, 6, 8, 12],
+      [3, 7, 9, 13],
+      [4, 8, 14],
+      [5, 11, 15],
+      [6, 10, 12, 16],
+      [7, 11, 13, 17],
+      [8, 12, 14, 18],
+      [9, 13, 19],
+      [10, 16, 20],
+      [11, 15, 17, 21],
+      [12, 16, 18, 22],
+      [13, 17, 19, 23],
+      [14, 18, 24],
+      [15, 21],
+      [16, 20, 22],
+      [17, 21, 23],
+      [18, 22, 24],
+      [19, 23],
+    ],
+  ];
 
   const [boxes, updateBoxes] = useState([
-    { id: 1, highlight: false, colour: "yellow", numbers: [1, 3] },
-    { id: 2, highlight: false, colour: "yellow", numbers: [0, 2, 4] },
-    { id: 3, highlight: false, colour: "yellow", numbers: [1, 5] },
-    { id: 4, highlight: false, colour: "yellow", numbers: [0, 4, 6] },
-    { id: 5, highlight: false, colour: "yellow", numbers: [1, 3, 5, 7] },
-    { id: 6, highlight: false, colour: "yellow", numbers: [2, 4, 8] },
-    { id: 7, highlight: false, colour: "yellow", numbers: [3, 7] },
-    { id: 8, highlight: false, colour: "yellow", numbers: [4, 6, 8] },
-    { id: 9, highlight: false, colour: "yellow", numbers: [5, 7] },
+    { id: 0, highlight: false, colour: "yellow", numbers: [1, 3] },
+    { id: 1, highlight: false, colour: "yellow", numbers: [0, 2, 4] },
+    { id: 2, highlight: false, colour: "yellow", numbers: [1, 5] },
+    { id: 3, highlight: false, colour: "yellow", numbers: [0, 4, 6] },
+    { id: 4, highlight: false, colour: "yellow", numbers: [1, 3, 5, 7] },
+    { id: 5, highlight: false, colour: "yellow", numbers: [2, 4, 8] },
+    { id: 6, highlight: false, colour: "yellow", numbers: [3, 7] },
+    { id: 7, highlight: false, colour: "yellow", numbers: [4, 6, 8] },
+    { id: 8, highlight: false, colour: "yellow", numbers: [5, 7] },
   ]);
 
   const [selectedColour, updateSelectedColour] = useState("yellow");
@@ -82,7 +109,7 @@ const App = () => {
     updateMoveCount(newCount);
 
     let newBoxes = [...boxes];
-    const boxIndex = id - 1;
+    const boxIndex = id;
     newBoxes[boxIndex].highlight = !newBoxes[boxIndex].highlight;
     newBoxes[boxIndex].colour = selectedColour;
     newBoxes = changeSurrounding(newBoxes, boxIndex, selectedColour);
@@ -91,19 +118,38 @@ const App = () => {
 
   const handleReset = () => {
     let newBoxes = [...boxes];
-    newBoxes.forEach(box => {
+    newBoxes.forEach((box) => {
       box.highlight = false;
       box.colour = "yellow";
-    })
+    });
     updateBoxes(newBoxes);
-  }
+  };
 
   const handleGridChange = (operator) => {
     let newGrid = gridSize;
-    newGrid = operator === "+" ? newGrid+1 : newGrid-1;
-    console.log(newGrid);
+
+    if (newGrid === 5 && operator === "+") return;
+    if (newGrid === 3 && operator === "-") return;
+
+    newGrid = operator === "+" ? newGrid + 1 : newGrid - 1;
     updateGridSize(newGrid);
-  }
+    handleReset();
+    let resetMoves = moveCount;
+    resetMoves = 0;
+    updateMoveCount(resetMoves);
+    let newBoxes = [];
+    let index = newGrid - 3;
+
+    for (let i = 0; i < grids[index].length; i++) {
+      newBoxes.push({
+        id: i,
+        highlight: false,
+        colour: "yellow",
+        numbers: grids[index][i],
+      });
+    }
+    updateBoxes(newBoxes);
+  };
 
   return (
     <div id="main">
@@ -115,11 +161,12 @@ const App = () => {
       />
       <Boxes
         boxes={boxes}
+        gridSize={gridSize}
         onHighlight={handleHighlight}
         selectedColour={selectedColour}
       />
-      <ResetBtn onReset={handleReset}/>
-      <GridSelect onGridChange={handleGridChange} gridSize={gridSize}/>
+      <ResetBtn onReset={handleReset} />
+      <GridSelect onGridChange={handleGridChange} gridSize={gridSize} />
     </div>
   );
 };
@@ -129,12 +176,10 @@ export default App;
 /*  TO DO
 
     ASAP:
-    Write values for 5x5 grid
-    Implement changeGrid method, min 3x3, max 5x5
-    Dynamically render new grid
+    Export grid variable to seperate module, declutter
+    Make fully responsive
     Styled Components
     Randomly generate a pattern which the user has to match
-    Add counter for amount of moves
     Add victory message for matching pattern
 
     Future:
