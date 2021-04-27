@@ -11,8 +11,7 @@ body,
 body {
   background-color: black;
   color: white;
-  height: auto;
-  padding: 3rem;
+  height: 100vh;
   font-family: "Raleway", sans-serif;
   font-weight: 300;
 }
@@ -30,11 +29,12 @@ button {
   width: 500px;
   height: 500px;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .GameContainer > div {
   border-radius: 10%;
-  transition: background-color 0.5s, border 0.5s, box-shadow 0.5s;
+  transition: background-color 0.5s, box-shadow 0.5s;
   cursor: pointer;
 }
 
@@ -46,28 +46,25 @@ button {
 }
 
 .blue {
-  background-color: dodgerblue;
-  border: 3px solid darkslateblue;
-  box-shadow: 0 0 15px dodgerblue, inset 0 0 15px 5px darkslateblue;
+  background-color: cyan;
+  border: 3px solid dodgerblue;
+  box-shadow: 0 0 15px cyan, inset 0 0 15px 10px dodgerblue;
   z-index: 999;
 }
 
 .three {
   width: 30%;
   height: 30%;
-  margin: 1%;
 }
 
 .four {
   width: 22%;
   height: 22%;
-  margin: 0.5%;
 }
 
 .five {
   width: 17%;
   height: 17%;
-  margin: 0.5%;
 }
 
 .boxOff {
@@ -114,25 +111,7 @@ h1 {
 
 @media screen and (max-width: 414px) {
   .GameContainer {
-    width: 90vw;
-    height: 90vw;
-  }
-
-  .three {
-    width: 28%;
-    height: 28%;
-    margin: 1%;
-  }
-
-  .four {
-    width: 20%;
-    height: 20%;
-    margin: 1%;
-  }
-
-  .five {
-    width: 15%;
-    height: 15%;
-    margin: 1%;
+    width: 220px;
+    height: 220px;
   }
 }
