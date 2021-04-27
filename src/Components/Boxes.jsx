@@ -12,8 +12,6 @@ const Boxes = ({ boxes, gridSize, onHighlight, selectedColour }) => {
   classes +=
     gridSize === 3 ? " three" : (classes += gridSize === 4 ? " four" : " five");
 
-  console.log(gridSize, classes);
-
   return (
     <div className="GameContainer">
       {boxes.map(({ id, highlight, colour }) => (
