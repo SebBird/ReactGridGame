@@ -56,7 +56,6 @@ const App = () => {
 
     let newBoxes = [...boxes];
     const boxIndex = id;
-    console.log(newBoxes, boxIndex);
     newBoxes[boxIndex].highlight = !newBoxes[boxIndex].highlight;
     newBoxes[boxIndex].colour = selectedColour;
     newBoxes = changeSurrounding(newBoxes, boxIndex, selectedColour);
@@ -74,7 +73,7 @@ const App = () => {
 
   const handleGridChange = (operator) => {
     let newGrid = gridSize;
-    if (newGrid === 5 && operator === "+") return;
+    if (newGrid === 12 && operator === "+") return;
     if (newGrid === 3 && operator === "-") return;
 
     newGrid = operator === "+" ? newGrid + 1 : newGrid - 1;
@@ -126,10 +125,7 @@ export default App;
 /*  TO DO
 
     ASAP:
-    Make fully responsive
-    Styled Components
     Randomly generate a pattern which the user has to match
-    Add counter for amount of moves
     Add victory message for matching pattern
 
     Future:
