@@ -33,42 +33,27 @@ button {
 }
 
 .GameContainer > div {
+  transition: background-color 0.5s, box-shadow 1s ease-out;
   border-radius: 10%;
-  transition: background-color 0.5s, box-shadow 0.5s;
   cursor: pointer;
 }
 
 .yellow {
   background-color: yellow;
   border: 3px solid goldenrod;
-  box-shadow: 0 0 15px yellow, inset 0 0 15px 5px goldenrod;
+  box-shadow: 0 0 10px yellow, inset 0 0 10px 5px goldenrod;
   z-index: 999;
 }
 
 .blue {
   background-color: cyan;
   border: 3px solid dodgerblue;
-  box-shadow: 0 0 15px cyan, inset 0 0 15px 10px dodgerblue;
+  box-shadow: 0 0 10px cyan, inset 0 0 10px 5px dodgerblue;
   z-index: 999;
 }
 
-.three {
-  width: 30%;
-  height: 30%;
-}
-
-.four {
-  width: 22%;
-  height: 22%;
-}
-
-.five {
-  width: 17%;
-  height: 17%;
-}
-
 .boxOff {
-  background-color: slategrey;
+  background-color: rgb(61, 61, 61);
   border: 3px solid black;
 }
 
@@ -96,7 +81,7 @@ button {
 }
 
 .blueSelect {
-  background-color: royalblue;
+  background-color: cyan;
   box-shadow: 0 0 15px dodgerblue, inset 0 0 5px 5px darkslateblue;
 }
 
