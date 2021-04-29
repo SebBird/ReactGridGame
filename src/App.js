@@ -3,7 +3,7 @@ import Boxes from "./Components/Boxes";
 import ColourPicker from "./Components/ColourPicker";
 import ResetBtn from "./Components/Reset";
 import GridSelect from "./Components/GridSelect";
-import { getGrid } from "./jsmodules/Grid";
+import { getGrid, populateBoxes } from "./jsmodules/Grid";
 import "./App.css";
 
 const App = () => {
@@ -11,17 +11,7 @@ const App = () => {
 
   const [grids, updateGrids] = useState(getGrid(gridSize));
 
-  const [boxes, updateBoxes] = useState([
-    { id: 0, highlight: false, colour: "yellow", numbers: grids[0] },
-    { id: 1, highlight: false, colour: "yellow", numbers: grids[1] },
-    { id: 2, highlight: false, colour: "yellow", numbers: grids[2] },
-    { id: 3, highlight: false, colour: "yellow", numbers: grids[3] },
-    { id: 4, highlight: false, colour: "yellow", numbers: grids[4] },
-    { id: 5, highlight: false, colour: "yellow", numbers: grids[5] },
-    { id: 6, highlight: false, colour: "yellow", numbers: grids[6] },
-    { id: 7, highlight: false, colour: "yellow", numbers: grids[7] },
-    { id: 8, highlight: false, colour: "yellow", numbers: grids[8] },
-  ]);
+  const [boxes, updateBoxes] = useState(populateBoxes(grids.length));
 
   const [selectedColour, updateSelectedColour] = useState("yellow");
 
