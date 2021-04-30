@@ -9,9 +9,7 @@ import "./App.css";
 const App = () => {
   const [gridSize, updateGridSize] = useState(3);
 
-  const [grids, updateGrids] = useState(getGrid(gridSize));
-
-  const [boxes, updateBoxes] = useState(populateBoxes(grids.length));
+  const [boxes, updateBoxes] = useState(populateBoxes(gridSize));
 
   const [selectedColour, updateSelectedColour] = useState("yellow");
 
@@ -63,7 +61,7 @@ const App = () => {
 
   const handleGridChange = (operator) => {
     let newGrid = gridSize;
-    if (newGrid === 12 && operator === "+") return;
+    if (newGrid === 9 && operator === "+") return;
     if (newGrid === 3 && operator === "-") return;
 
     newGrid = operator === "+" ? newGrid + 1 : newGrid - 1;
@@ -71,7 +69,6 @@ const App = () => {
     handleReset();
 
     let newGridRow = getGrid(newGrid);
-    updateGrids(newGridRow);
 
     let resetMoves = moveCount;
     resetMoves = 0;
