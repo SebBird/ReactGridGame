@@ -73,7 +73,7 @@ export const populateBoxes = (gridRowSize) => {
   let grids = getGrid(gridRowSize);
 
   let boxes = [];
-  for (let i = 0; i < gridRowSize; i++) {
+  for (let i = 0; i < gridRowSize * gridRowSize; i++) {
     boxes.push({
       id: i,
       highlight: false,

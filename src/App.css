@@ -11,7 +11,6 @@ body,
 body {
   background-color: black;
   color: white;
-  height: 100vh;
   font-family: "Raleway", sans-serif;
   font-weight: 300;
 }
@@ -23,6 +22,7 @@ button {
 
 #main {
   flex-direction: column;
+  padding: 1rem;
 }
 
 .GameContainer {
@@ -92,11 +92,18 @@ button {
 h1 {
   font-size: 3rem;
   margin: 0;
+  text-align: center;
 }
 
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 1280px) {
   .GameContainer {
     width: 220px;
     height: 220px;
   }
 }
+/* @media screen and (max-width: 414px) {
+  .GameContainer {
+    width: 220px;
+    height: 220px;
+  }
+} */
