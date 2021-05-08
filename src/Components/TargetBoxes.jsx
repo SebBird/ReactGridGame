@@ -15,16 +15,15 @@ const Box = styled.div`
   }
 `;
 
-const Boxes = ({ boxes, gridSize, onHighlight, selectedColour }) => {
+const TargetBoxes = ({ targetBoxes, gridSize }) => {
   return (
     <div>
-      <Paragraph>Your grid:</Paragraph>
+      <Paragraph>Match the pattern below!</Paragraph>
       <div className="GameContainer">
-        {boxes.map(({ id, highlight, colour }) => (
+        {targetBoxes.map(({ id, highlight, colour }) => (
           <Box
             gridSize={gridSize}
-            key={id}
-            onClick={() => onHighlight(id, selectedColour)}
+            key={id + "target"}
             className={highlight ? colour : "boxOff"}
           />
         ))}
@@ -33,4 +32,4 @@ const Boxes = ({ boxes, gridSize, onHighlight, selectedColour }) => {
   );
 };
 
-export default Boxes;
+export default TargetBoxes;

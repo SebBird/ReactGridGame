@@ -1,23 +1,49 @@
 import React, { useState } from "react";
 import Boxes from "./Components/Boxes";
+import TargetBoxes from "./Components/TargetBoxes";
 import ColourPicker from "./Components/ColourPicker";
 import ResetBtn from "./Components/Reset";
-import GridSelect from "./Components/GridSelect";
+import MenuReturn from "./Components/MenuReturn";
+import MainMenu from "./Components/MainMenu";
 import { getGrid, populateBoxes } from "./jsmodules/Grid";
 import "./App.css";
 
 const App = () => {
-  const [gridSize, updateGridSize] = useState(3);
+  const [gridSize, updateGridSize] = useState();
 
   const [boxes, updateBoxes] = useState(populateBoxes(gridSize));
+
+  const [targetBoxes, updateTargetBoxes] = useState(boxes);
 
   const [selectedColour, updateSelectedColour] = useState("yellow");
 
   const [moveCount, updateMoveCount] = useState(0);
 
+  const [gameStarted, updateGameStarted] = useState(false);
+
+  const handleDifficultySelect = (difficulty) => {
+    startGame();
+    handleGridChange(difficulty);
+  };
+
+  const startGame = () => {
+    updateGameStarted(!gameStarted);
+  };
+
   const handleColourChange = (currentColour, selected) => {
     const newColour = selected;
     if (currentColour !== newColour) updateSelectedColour(newColour);
+  };
+
+  const randomiseTargetBoxes = (boxes) => {
+    let newTargetBoxes = boxes.map((box) => ({ ...box }));
+
+    newTargetBoxes.forEach((box) => {
+      const random = Math.random();
+      box.highlight = random > 0.75 ? true : false;
+      box.colour = random < 0.87 ? "yellow" : "blue";
+    });
+    updateTargetBoxes(newTargetBoxes);
   };
 
   const changeSurrounding = (newBoxes, index, selectedColour) => {
@@ -59,21 +85,13 @@ const App = () => {
     updateBoxes(newBoxes);
   };
 
-  const handleGridChange = (operator) => {
-    let newGrid = gridSize;
-    if (newGrid === 9 && operator === "+") return;
-    if (newGrid === 3 && operator === "-") return;
-
-    newGrid = operator === "+" ? newGrid + 1 : newGrid - 1;
-    updateGridSize(newGrid);
+  const handleGridChange = (difficulty) => {
+    updateGridSize(difficulty);
     handleReset();
-
-    let newGridRow = getGrid(newGrid);
-
+    let newGridRow = getGrid(difficulty);
     let resetMoves = moveCount;
     resetMoves = 0;
     updateMoveCount(resetMoves);
-
     let newBoxes = [];
 
     for (let i = 0; i < newGridRow.length; i++) {
@@ -85,24 +103,34 @@ const App = () => {
       });
     }
     updateBoxes(newBoxes);
+    randomiseTargetBoxes(newBoxes);
   };
 
   return (
     <div id="main">
       <h1>Yellow &#38; Blue</h1>
-      <p>Moves: {moveCount}</p>
-      <ColourPicker
-        currentColour={selectedColour}
-        onColourChange={handleColourChange}
-      />
-      <Boxes
-        boxes={boxes}
-        gridSize={gridSize}
-        onHighlight={handleHighlight}
-        selectedColour={selectedColour}
-      />
-      <ResetBtn onReset={handleReset} />
-      <GridSelect onGridChange={handleGridChange} gridSize={gridSize} />
+      {!gameStarted ? (
+        <MainMenu onDifficultySelect={handleDifficultySelect} />
+      ) : (
+        <>
+          <p>Moves: {moveCount}</p>
+          <ColourPicker
+            currentColour={selectedColour}
+            onColourChange={handleColourChange}
+          />
+          <div className="boxContainers">
+            <Boxes
+              boxes={boxes}
+              gridSize={gridSize}
+              onHighlight={handleHighlight}
+              selectedColour={selectedColour}
+            />
+            <TargetBoxes targetBoxes={targetBoxes} gridSize={gridSize} />
+          </div>
+          <ResetBtn onReset={handleReset} />
+          <MenuReturn onMenuReturn={startGame} />
+        </>
+      )}
     </div>
   );
 };
@@ -112,12 +140,10 @@ export default App;
 /*  TO DO
 
     ASAP:
-    Randomly generate a pattern which the user has to match
     Add victory message for matching pattern
 
     Future:
     Link to back-end services and log individual scores
-    Varying difficulties
     Time trial setting
 
 */
