@@ -28,6 +28,7 @@ button {
 .GameContainer {
   width: 500px;
   height: 500px;
+  margin: 20px;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
@@ -95,10 +96,22 @@ h1 {
   text-align: center;
 }
 
+.boxContainers {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
 @media screen and (max-width: 1280px) {
   .GameContainer {
     width: 220px;
     height: 220px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .boxContainers {
+    flex-direction: column;
   }
 }
 /* @media screen and (max-width: 414px) {
