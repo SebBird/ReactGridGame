@@ -6,6 +6,7 @@ import ResetBtn from "./Components/Reset";
 import MenuReturn from "./Components/MenuReturn";
 import MainMenu from "./Components/MainMenu";
 import { getGrid, populateBoxes } from "./jsmodules/Grid";
+import levels from "./jsmodules/GridLevels";
 import "./App.css";
 
 const App = () => {
@@ -21,6 +22,8 @@ const App = () => {
 
   const [gameStarted, updateGameStarted] = useState(false);
 
+  const [gameWon, updateGameWon] = useState(false);
+
   const handleDifficultySelect = (difficulty) => {
     startGame();
     handleGridChange(difficulty);
@@ -35,14 +38,10 @@ const App = () => {
     if (currentColour !== newColour) updateSelectedColour(newColour);
   };
 
-  const randomiseTargetBoxes = (boxes) => {
-    let newTargetBoxes = boxes.map((box) => ({ ...box }));
-
-    newTargetBoxes.forEach((box) => {
-      const random = Math.random();
-      box.highlight = random > 0.75 ? true : false;
-      box.colour = random < 0.87 ? "yellow" : "blue";
-    });
+  const randomiseTargetBoxes = (difficulty) => {
+    //Set the targetGrid to a random level based on grid size
+    let newTargetBoxes =
+      levels[difficulty][Math.floor(Math.random() * levels[difficulty].length)];
     updateTargetBoxes(newTargetBoxes);
   };
 
@@ -74,6 +73,12 @@ const App = () => {
     newBoxes[boxIndex].colour = selectedColour;
     newBoxes = changeSurrounding(newBoxes, boxIndex, selectedColour);
     updateBoxes(newBoxes);
+    checkMatch(newBoxes, targetBoxes);
+  };
+
+  const checkMatch = (currentBoxes, patternBoxes) => {
+    //Will not work as ids are different, instead, check the highlighted boxes match in colour.
+    updateGameWon(currentBoxes === patternBoxes ? true : false);
   };
 
   const handleReset = () => {
@@ -103,8 +108,10 @@ const App = () => {
       });
     }
     updateBoxes(newBoxes);
-    randomiseTargetBoxes(newBoxes);
+    randomiseTargetBoxes(difficulty - 3);
   };
+
+  if (gameWon) return <p>You won!</p>;
 
   return (
     <div id="main">
