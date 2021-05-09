@@ -15,20 +15,40 @@ const Box = styled.div`
   }
 `;
 
-const Boxes = ({ boxes, gridSize, onHighlight, selectedColour }) => {
+const Victory = styled.p`
+  margin: 0;
+  padding: 275px 0;
+  font-size: 40px;
+  font-weight: 800;
+`;
+
+const Boxes = ({
+  boxes,
+  gridSize,
+  onHighlight,
+  selectedColour,
+  gameWon,
+  moveCount,
+}) => {
   return (
     <div>
-      <Paragraph>Your grid:</Paragraph>
-      <div className="GameContainer">
-        {boxes.map(({ id, highlight, colour }) => (
-          <Box
-            gridSize={gridSize}
-            key={id}
-            onClick={() => onHighlight(id, selectedColour)}
-            className={highlight ? colour : "boxOff"}
-          />
-        ))}
-      </div>
+      {gameWon ? (
+        <Victory> You won in {moveCount} moves!</Victory>
+      ) : (
+        <>
+          <Paragraph>Your grid:</Paragraph>
+          <div className="GameContainer">
+            {boxes.map(({ id, highlight, colour }) => (
+              <Box
+                gridSize={gridSize}
+                key={id}
+                onClick={() => onHighlight(id, selectedColour)}
+                className={highlight ? colour : "boxOff"}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

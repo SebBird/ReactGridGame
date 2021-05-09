@@ -30,6 +30,7 @@ const App = () => {
   };
 
   const startGame = () => {
+    updateGameWon(false);
     updateGameStarted(!gameStarted);
   };
 
@@ -77,8 +78,16 @@ const App = () => {
   };
 
   const checkMatch = (currentBoxes, patternBoxes) => {
-    //Will not work as ids are different, instead, check the highlighted boxes match in colour.
-    updateGameWon(currentBoxes === patternBoxes ? true : false);
+    for (let i = 0; i < currentBoxes.length; i++) {
+      if (currentBoxes[i].highlight !== patternBoxes[i].highlight) return;
+      if (
+        currentBoxes[i].highlight === true &&
+        patternBoxes[i].highlight === true
+      ) {
+        if (currentBoxes[i].colour !== patternBoxes[i].colour) return;
+      }
+    }
+    updateGameWon(true);
   };
 
   const handleReset = () => {
@@ -111,8 +120,6 @@ const App = () => {
     randomiseTargetBoxes(difficulty - 3);
   };
 
-  if (gameWon) return <p>You won!</p>;
-
   return (
     <div id="main">
       <h1>Yellow &#38; Blue</h1>
@@ -131,8 +138,14 @@ const App = () => {
               gridSize={gridSize}
               onHighlight={handleHighlight}
               selectedColour={selectedColour}
+              gameWon={gameWon}
+              moveCount={moveCount}
             />
-            <TargetBoxes targetBoxes={targetBoxes} gridSize={gridSize} />
+            <TargetBoxes
+              targetBoxes={targetBoxes}
+              gridSize={gridSize}
+              gameWon={gameWon}
+            />
           </div>
           <ResetBtn onReset={handleReset} />
           <MenuReturn onMenuReturn={startGame} />
@@ -147,10 +160,10 @@ export default App;
 /*  TO DO
 
     ASAP:
-    Add victory message for matching pattern
+    Fix sizing on victory message
+    Allow level selection within grid size? 
 
     Future:
     Link to back-end services and log individual scores
-    Time trial setting
 
 */

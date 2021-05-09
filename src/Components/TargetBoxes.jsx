@@ -15,19 +15,23 @@ const Box = styled.div`
   }
 `;
 
-const TargetBoxes = ({ targetBoxes, gridSize }) => {
+const TargetBoxes = ({ targetBoxes, gridSize, gameWon }) => {
   return (
     <div>
-      <Paragraph>Match the pattern below!</Paragraph>
-      <div className="GameContainer">
-        {targetBoxes.map(({ id, highlight, colour }) => (
-          <Box
-            gridSize={gridSize}
-            key={id + "target"}
-            className={highlight ? colour : "boxOff"}
-          />
-        ))}
-      </div>
+      {gameWon ? null : (
+        <>
+          <Paragraph>Match the pattern below!</Paragraph>
+          <div className="GameContainer">
+            {targetBoxes.map(({ id, highlight, colour }) => (
+              <Box
+                gridSize={gridSize}
+                key={id + "target"}
+                className={highlight ? colour : "boxOff"}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
