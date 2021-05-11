@@ -13,13 +13,38 @@ const Box = styled.div`
     width: ${(props) => 75 / props.gridSize}%;
     height: ${(props) => 75 / props.gridSize}%;
   }
+  ${({ gameWon }) =>
+    gameWon
+      ? `
+  filter: blur(4px) grayscale(50%) ;
+`
+      : null}
 `;
 
 const Victory = styled.p`
+  user-select: none;
+  height: 500px;
+  width: 500px;
+  line-height: 500px;
+  text-align: center;
   margin: 0;
-  padding: 275px 0;
-  font-size: 40px;
+  z-index: 9999;
+  font-size: 1.2rem;
   font-weight: 800;
+  position: absolute;
+  border-radius: 10px;
+  display: none;
+  @media (max-width: 1280px) {
+    height: 220px;
+    width: 220px;
+    line-height: 220px;
+  }
+  ${({ gameWon }) =>
+    gameWon
+      ? `
+    display: inline;
+  `
+      : null}
 `;
 
 const Boxes = ({
@@ -32,23 +57,19 @@ const Boxes = ({
 }) => {
   return (
     <div>
-      {gameWon ? (
-        <Victory> You won in {moveCount} moves!</Victory>
-      ) : (
-        <>
-          <Paragraph>Your grid:</Paragraph>
-          <div className="GameContainer">
-            {boxes.map(({ id, highlight, colour }) => (
-              <Box
-                gridSize={gridSize}
-                key={id}
-                onClick={() => onHighlight(id, selectedColour)}
-                className={highlight ? colour : "boxOff"}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      <Paragraph>Your grid:</Paragraph>
+      <div className="GameContainer">
+        <Victory gameWon={gameWon}>You won in {moveCount} moves!</Victory>
+        {boxes.map(({ id, highlight, colour }) => (
+          <Box
+            gameWon={gameWon}
+            gridSize={gridSize}
+            key={id}
+            onClick={() => onHighlight(id, selectedColour)}
+            className={highlight ? colour : "boxOff"}
+          />
+        ))}
+      </div>
     </div>
   );
 };

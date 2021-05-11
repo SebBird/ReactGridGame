@@ -13,25 +13,28 @@ const Box = styled.div`
     width: ${(props) => 75 / props.gridSize}%;
     height: ${(props) => 75 / props.gridSize}%;
   }
+  ${({ gameWon }) =>
+    gameWon
+      ? `
+filter: blur(4px) grayscale(50%);
+`
+      : null}
 `;
 
 const TargetBoxes = ({ targetBoxes, gridSize, gameWon }) => {
   return (
     <div>
-      {gameWon ? null : (
-        <>
-          <Paragraph>Match the pattern below!</Paragraph>
-          <div className="GameContainer">
-            {targetBoxes.map(({ id, highlight, colour }) => (
-              <Box
-                gridSize={gridSize}
-                key={id + "target"}
-                className={highlight ? colour : "boxOff"}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      <Paragraph>Match the pattern below!</Paragraph>
+      <div className="GameContainer">
+        {targetBoxes.map(({ id, highlight, colour }) => (
+          <Box
+            gameWon={gameWon}
+            gridSize={gridSize}
+            key={id + "target"}
+            className={highlight ? colour : "boxOff"}
+          />
+        ))}
+      </div>
     </div>
   );
 };
