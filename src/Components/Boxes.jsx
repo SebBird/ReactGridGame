@@ -27,6 +27,7 @@ const Victory = styled.p`
   width: 500px;
   line-height: 500px;
   text-align: center;
+  text-shadow: 0 0 3px black;
   margin: 0;
   z-index: 9999;
   font-size: 1.2rem;
