@@ -147,7 +147,7 @@ const App = () => {
               gameWon={gameWon}
             />
           </div>
-          <ResetBtn onReset={handleReset} />
+          <ResetBtn gameWon={gameWon} onReset={handleReset} />
           <MenuReturn onMenuReturn={startGame} />
         </>
       )}

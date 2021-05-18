@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import styled from "styled-components";
 
 const ResetButton = styled.button`
@@ -16,11 +16,10 @@ transition: all 0.1s;
     box-shadow: none;
 }`;
 
-const ResetBtn = ({onReset}) => {
+const ResetBtn = ({ onReset, gameWon }) => {
+  return (
+    <ResetButton onClick={gameWon ? null : onReset}>Reset Grid</ResetButton>
+  );
+};
 
-    return ( 
-        <ResetButton onClick={onReset}>Reset Grid</ResetButton>
-     );
-}
- 
 export default ResetBtn;
